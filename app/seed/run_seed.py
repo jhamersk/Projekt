@@ -1,3 +1,7 @@
+import os
+import csv
+import json
+
 from src.app import create_app
 from src.db import db
 from src.models import User, Task, Product
@@ -37,5 +41,24 @@ with app.app_context():
         db.session.add(p)
 
     db.session.commit()
+
+    print("Writing output files")
+
+    os.makedirs("/seed_output", exist_ok=True)
+
+    with open("/seed_output/users.csv", "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["id", "name"])
+        for u in users:
+            writer.writerow([u.id, u.name])
+
+    with open("/seed_output/tasks.json", "w") as f:
+        json.dump([t.to_dict() for t in tasks], f, indent=2)
+
+    with open("/seed_output/products.json", "w") as f:
+        json.dump([p.to_dict() for p in products], f, indent=2)
+
+    with open("/seed_output/seed.log", "w") as f:
+        f.write("Seed completed successfully.\n")
 
     print("Seeder finished.")
