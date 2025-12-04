@@ -1,14 +1,6 @@
-# Projekt: Flask + Nginx + PostgreSQL w Dockerze z Azure IaC
+# Infrastruktura Azure (IaC)
 
-## Opis projektu
-Celem projektu jest stworzenie kompletnego środowiska dla aplikacji webowej **Flask + Nginx + PostgreSQL**, które:
-- Działa całkowicie w **Dockerze** (backend, frontend, baza danych, migracje, seedowanie, testy),
-- Używa **Azure** wyłącznie jako minimalnego IaC (Resource Group + ACR),
-- Korzysta z **wielostopniowego Dockerfile** (builder → test → final),
-- Wykorzystuje **Docker Compose** do uruchamiania wszystkich elementów,
-- Posiada **dedykowane sieci i wolumeny Dockerowe**,
-- Implementuje **seedowanie bazy w osobnym kontenerze**,
-- Zawiera **pipeline CI/CD w GitHub Actions**.
+Katalog `infra/` zawiera definicję minimalnej infrastruktury Azure wymaganą w projekcie „Docker + DevOps + IaC (Azure)”. Infrastruktura jest przygotowana w technologii Bicep i składa się z dwóch plików: `main.bicep`, który tworzy grupę zasobów (Resource Group) i wywołuje moduł `resources.bicep`, oraz samego modułu, który tworzy Azure Container Registry (ACR) oraz Storage Account. Plik `parameters.json` zawiera wartości parametrów takie jak nazwa grupy zasobów, lokalizacja, nazwa ACR i nazwa Storage Account.
 
 Poniżej znajduje się działanie komendy:
 
@@ -19,4 +11,4 @@ az deployment sub what-if \
     --parameters parameters.json
 ```
 
-![Screen z działania komendy](Screen.png)
+![Screen z działania komendy](../docs/Screen.png)
